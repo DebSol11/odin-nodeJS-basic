@@ -34,6 +34,17 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(500, { "Content-Type": "text/plain" });
       res.end("Internal Server Error");
     }
+  } else if (req.url === "/contact-me") {
+    try {
+      const htmlPath = path.join(__dirname, "/contact-me.html");
+      const htmlContent = await fs.readFile(htmlPath, "utf8");
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(htmlContent);
+    } catch (err) {
+      console.error("Error reading index.html:", err);
+      res.writeHead(500, { "Content-Type": "text/plain" });
+      res.end("Internal Server Error");
+    }
   } else {
     // Serve 404.html for all other URLs
     try {
